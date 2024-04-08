@@ -18,13 +18,9 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../utils/config"));
 const user_1 = __importDefault(require("../models/user"));
 const usersRouter = (0, express_1.Router)();
-const populateQuery = [
-    { path: 'events', select: 'title' },
-    { path: 'toDos', select: 'description' },
-];
 // Get All Users
 usersRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield user_1.default.find({}).populate(populateQuery);
+    const users = yield user_1.default.find({});
     res.json(users);
 }));
 // Get User by Token
@@ -42,47 +38,34 @@ usersRouter.get('/:token', (req, res) => __awaiter(void 0, void 0, void 0, funct
         user: dbUser,
     });
 }));
-// Get User Events by Username
-usersRouter.get('/:username/events', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username } = req.params;
-    const user = yield user_1.default.findOne({ username: username });
-    console.log('backend get user events user:', user);
+// Get User Weights by email
+usersRouter.get('/:email/weights', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email } = req.params;
+    const user = yield user_1.default.findOne({ email: email });
+    console.log('backend get user weights user:', user);
     if (user) {
         res.json({
             success: true,
-            events: user.events,
+            weights: user.weights,
         });
     }
     else {
         res.status(404).end();
     }
 }));
-// Get User ToDos by Username
-usersRouter.get('/:username/toDos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username } = req.params;
-    const user = yield user_1.default.findOne({ username: username });
+// Delete weight
+usersRouter.put('/:email/weights/:weightId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, weightId } = req.params;
+    console.log('usersRouter put weightId:', weightId);
+    const user = yield user_1.default.findOne({ email: email });
     if (user) {
-        res.json({
-            toDos: user.toDos,
-        });
-    }
-    else {
-        res.status(404).end();
-    }
-}));
-// Delete Event
-usersRouter.put('/:username/events/:eventId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username, eventId } = req.params;
-    console.log('usersRouter put eventId:', eventId);
-    const user = yield user_1.default.findOne({ username: username });
-    if (user) {
-        const { events } = user;
-        const newEvents = events.filter((event) => event._id.toString() !== eventId);
-        user.events = newEvents;
+        const { weights } = user;
+        const newweights = weights.filter((weight) => weight._id.toString() !== weightId);
+        user.weights = newweights;
         yield user.save();
         res.json({
             success: true,
-            events: newEvents,
+            weights: newweights,
         });
     }
     else {

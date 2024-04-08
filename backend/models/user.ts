@@ -1,21 +1,23 @@
 import mongoose from 'mongoose';
-import EventModel from './event';
-import ToDoModel from './toDo';
 
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
     minLength: 3,
   },
-  passwordHash: {
+  email: {
     type: String,
     required: true,
+    unique: true,
+  },
+  passwordHash: {
+    type: String,
+    required: false,
     minLength: 4,
   },
-  events: [],
-  toDos: [],
+  weights: [],
 });
 
 userSchema.set('toJSON', {
