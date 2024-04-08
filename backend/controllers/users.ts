@@ -9,7 +9,7 @@ const usersRouter = Router();
 
 // Get All Users
 usersRouter.get('/', async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({}).populate('weights');
   res.json(users);
 });
 

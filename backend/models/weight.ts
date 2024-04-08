@@ -1,15 +1,11 @@
 import mongoose from 'mongoose';
 
-const toDoSchema = new mongoose.Schema({
-  title: {
-    type: String,
+const weightSchema = new mongoose.Schema({
+  weight: {
+    type: Number,
     required: true,
   },
-  color: {
-    type: String,
-    required: true,
-  },
-  urgency: {
+  date: {
     type: String,
     required: true,
   },
@@ -19,7 +15,7 @@ const toDoSchema = new mongoose.Schema({
   },
 });
 
-toDoSchema.set('toJSON', {
+weightSchema.set('toJSON', {
   transform: (document, returnedToDo) => {
     returnedToDo.id = returnedToDo._id.toString();
     delete returnedToDo._id;
@@ -27,5 +23,5 @@ toDoSchema.set('toJSON', {
   },
 });
 
-const ToDoModel = mongoose.model('ToDoModel', toDoSchema);
+const ToDoModel = mongoose.model('ToDoModel', weightSchema);
 export default ToDoModel;

@@ -2,8 +2,7 @@ export interface UserType {
   _id: string;
   username: string;
   password: string;
-  events: EventType[];
-  toDos: ToDoType[];
+  weights: WeightType[];
 }
 
 export interface InputField {
@@ -33,29 +32,15 @@ export interface UserResult {
   message: string;
 }
 
-export interface ToDoFormData {
-  title: string;
-  urgency: string;
-  color: string;
+export interface WeightFormData {
+  weight: number;
+  date: string;
 }
 
-export interface ToDoType extends ToDoFormData {
+export interface WeightType {
   _id: string;
-}
-
-export interface EventFormData {
-  description: string;
-  allDay: boolean;
-  start: string;
-  end: string;
-}
-
-export interface EventType {
-  _id: string;
-  description: string;
-  allDay: boolean;
-  start: string;
-  end: string;
+  weight: number;
+  date: string;
 }
 
 export interface EventStyleType {

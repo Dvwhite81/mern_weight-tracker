@@ -1,9 +1,8 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import moment from 'moment';
 
-import { AuthResult, EventType, UserType } from './utils/types';
+import { AuthResult, WeightType, UserType } from './utils/types';
 import userService from './services/userService';
 
 import LoginPage from './pages/LoginPage';
@@ -13,7 +12,7 @@ import './App.css';
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<UserType | null>(null);
-  const [userEvents, setUserEvents] = useState<EventType[]>([]);
+  const [userWeights, setUserWeights] = useState<WeightType[]>([]);
 
   const navigate = useNavigate();
 
@@ -33,7 +32,7 @@ function App() {
             console.log('checkLogged user:', user);
 
             setLoggedInUser(user);
-            setUserEvents(user.events);
+            setUserWeights(user.weights);
             navigate('/');
           } else {
             localStorage.removeItem('token');
@@ -96,7 +95,7 @@ function App() {
         if (user && token) {
           setLoggedInUser(user);
           localStorage.setItem('token', token);
-          setUserEvents(user.events);
+          setUserWeights(user.weights);
           navigate('/');
         }
 
@@ -107,51 +106,46 @@ function App() {
     }
   };
 
-  const addEvent = async (
-    description: string,
-    allDay: boolean,
-    start: string,
-    end: string
-  ) => {
+  const addWeight = async (weight: number, date: string) => {
     const token = localStorage.getItem('token');
 
     if (!loggedInUser || !token) return;
 
-    const newEvent = {
-      description,
-      allDay,
-      start: moment(start).format('yyyy-MM-DD'),
-      end: moment(end).format('yyyy-MM-DD'),
+    const newWeight = {
+      weight,
+      date,
     };
 
-    const result = await userService.addUserEvent(token, newEvent);
+    console.log('app newWeight:', newWeight);
+
+    const result = await userService.addUserWeight(token, newWeight);
 
     if (result) {
       const { success, message } = result;
 
       if (success) {
         toast.success(message);
-        setUserEvents(result.events);
+        setUserWeights(result.weights);
       } else {
         toast.error(message);
       }
     }
   };
 
-  const handleDeleteEvent = async (eventId: string) => {
-    console.log('handleDeleteEvent eventId:', eventId);
+  const handleDeleteWeight = async (weightId: string) => {
+    console.log('handleDeleteWeight weightId:', weightId);
     if (!loggedInUser) return;
 
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    const result = await userService.deleteUserEvent(token, eventId);
+    const result = await userService.deleteUserWeight(token, weightId);
     console.log('handleDelete result:', result);
     if (result) {
-      const { success, events, message } = result;
+      const { success, weights, message } = result;
 
       if (success) {
-        setUserEvents(events);
+        setUserWeights(weights);
         toast.success(message);
       } else {
         toast.error(message);
@@ -176,9 +170,9 @@ function App() {
           element={
             <HomePage
               loggedInUser={loggedInUser}
-              userEvents={userEvents}
-              addEvent={addEvent}
-              handleDeleteEvent={handleDeleteEvent}
+              userWeights={userWeights}
+              addWeight={addWeight}
+              handleDeleteWeight={handleDeleteWeight}
               handleLogOut={handleLogOut}
             />
           }

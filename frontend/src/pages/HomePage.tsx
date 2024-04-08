@@ -1,30 +1,25 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 
-import { EventType, UserType } from '../utils/types';
-import AddEventForm from '../components/AddEventForm';
+import { WeightType, UserType } from '../utils/types';
+import AddWeightForm from '../components/AddWeightForm';
 import { useNavigate } from 'react-router-dom';
 
 interface HomePageProps {
   loggedInUser: UserType | null;
-  userEvents: EventType[];
-  addEvent: (
-    description: string,
-    allDay: boolean,
-    start: string,
-    end: string
-  ) => void;
-  handleDeleteEvent: (eventId: string) => void;
+  userWeights: WeightType[];
+  addWeight: (weight: number, date: string) => void;
+  handleDeleteWeight: (weightId: string) => void;
   handleLogOut: (e: SyntheticEvent) => void;
 }
 
 const HomePage = ({
   loggedInUser,
-  userEvents,
-  addEvent,
-  handleDeleteEvent,
+  userWeights,
+  addWeight,
+  handleDeleteWeight,
   handleLogOut,
 }: HomePageProps) => {
-  const [showEvents, setShowEvents] = useState(false);
+  const [showWeights, setShowWeights] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,24 +37,24 @@ const HomePage = ({
         Log Out
       </button>
 
-      {!showEvents && (
-        <button type="button" onClick={() => setShowEvents(true)}>
-          Show Events
+      {!showWeights && (
+        <button type="button" onClick={() => setShowWeights(true)}>
+          Show Weights
         </button>
       )}
 
-      {showEvents && (
+      {showWeights && (
         <div>
-          <button type="button" onClick={() => setShowEvents(false)}>
-            Hide Events
+          <button type="button" onClick={() => setShowWeights(false)}>
+            Hide Weights
           </button>
           <ul>
-            {userEvents.map((event) => (
-              <li key={event._id}>
-                <p>{event.description}</p>
+            {userWeights.map((weight) => (
+              <li key={weight._id}>
+                <p>{weight.weight}</p>
                 <button
                   type="button"
-                  onClick={() => handleDeleteEvent(event._id)}
+                  onClick={() => handleDeleteWeight(weight._id)}
                 >
                   x
                 </button>
@@ -69,7 +64,7 @@ const HomePage = ({
         </div>
       )}
 
-      <AddEventForm addEvent={addEvent} />
+      <AddWeightForm addWeight={addWeight} />
     </div>
   );
 };

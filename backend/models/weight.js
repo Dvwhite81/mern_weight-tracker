@@ -4,16 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const toDoSchema = new mongoose_1.default.Schema({
-    title: {
-        type: String,
+const weightSchema = new mongoose_1.default.Schema({
+    weight: {
+        type: Number,
         required: true,
     },
-    color: {
-        type: String,
-        required: true,
-    },
-    urgency: {
+    date: {
         type: String,
         required: true,
     },
@@ -22,12 +18,12 @@ const toDoSchema = new mongoose_1.default.Schema({
         ref: 'User',
     },
 });
-toDoSchema.set('toJSON', {
+weightSchema.set('toJSON', {
     transform: (document, returnedToDo) => {
         returnedToDo.id = returnedToDo._id.toString();
         delete returnedToDo._id;
         delete returnedToDo.__v;
     },
 });
-const ToDoModel = mongoose_1.default.model('ToDoModel', toDoSchema);
+const ToDoModel = mongoose_1.default.model('ToDoModel', weightSchema);
 exports.default = ToDoModel;

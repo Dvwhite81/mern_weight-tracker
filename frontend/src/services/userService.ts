@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { EventFormData } from '../utils/types';
+import { WeightFormData } from '../utils/types';
 
 const baseUrl = 'http://localhost:7000/api';
 
@@ -41,42 +41,42 @@ const register = async (username: string, password: string) => {
   }
 };
 
-const getEventById = async (id: string) => {
-  const { data } = await axios.get(`${baseUrl}/events/${id}`);
-  console.log('getEventById data:', data);
+const getWeightById = async (id: string) => {
+  const { data } = await axios.get(`${baseUrl}/weights/${id}`);
+  console.log('getWeightById data:', data);
 
   if (data) {
     const { success } = data;
-    console.log('getEventById success:', success);
+    console.log('getWeightById success:', success);
 
     if (success) {
-      const { event } = data;
+      const { weight } = data;
       return {
         success: true,
-        event: event,
+        weight: weight,
       };
     }
   }
 };
 
-const getUserEvents = async (username: string, token: string) => {
-  const { data } = await axios.get(`${baseUrl}/users/${username}/events`, {
+const getUserWeights = async (username: string, token: string) => {
+  const { data } = await axios.get(`${baseUrl}/users/${username}/weights`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log('getUserEvents data:', data);
+  console.log('getUserWeights data:', data);
   if (data.success) {
-    const eventIds = data.events;
-    const userEvents = [];
+    const weightIds = data.weights;
+    const userWeights = [];
 
-    for (const id of eventIds) {
-      const event = getEventById(id);
-      userEvents.push(event);
+    for (const id of weightIds) {
+      const weight = getWeightById(id);
+      userWeights.push(weight);
     }
     return {
       success: true,
-      events: userEvents,
+      weights: userWeights,
     };
   } else {
     return {
@@ -86,12 +86,12 @@ const getUserEvents = async (username: string, token: string) => {
   }
 };
 
-const addUserEvent = async (token: string, newEvent: EventFormData) => {
+const addUserWeight = async (token: string, newWeight: WeightFormData) => {
   const { data } = await axios.post(
-    `${baseUrl}/events`,
+    `${baseUrl}/weights`,
     {
       token,
-      event: newEvent,
+      weight: newWeight,
     },
     {
       headers: {
@@ -100,13 +100,13 @@ const addUserEvent = async (token: string, newEvent: EventFormData) => {
     }
   );
 
-  console.log('addUserEvent data:', data);
+  console.log('addUserWeight data:', data);
   if (data.success) {
     return {
       success: true,
       message: data.message,
-      newEvent: newEvent,
-      events: data.events,
+      newWeight: newWeight,
+      weights: data.weights,
     };
   } else {
     return {
@@ -116,20 +116,20 @@ const addUserEvent = async (token: string, newEvent: EventFormData) => {
   }
 };
 
-const deleteUserEvent = async (token: string, eventId: string) => {
+const deleteUserWeight = async (token: string, weightId: string) => {
   const { user } = await getUserByToken(token);
-  console.log('deleteUserEvent eventId:', eventId);
+  console.log('deleteUserWeight weightId:', weightId);
   const { username } = user;
 
   const { data } = await axios.put(
-    `${baseUrl}/users/${username}/events/${eventId}`
+    `${baseUrl}/users/${username}/weights/${weightId}`
   );
-  console.log('deleteUserEvent data:', data);
+  console.log('deleteUserWeight data:', data);
   if (data.success) {
     return {
       success: true,
-      message: 'Deleted event',
-      events: data.events,
+      message: 'Deleted weight',
+      weights: data.weights,
     };
   }
 };
@@ -151,10 +151,10 @@ const getUserByToken = async (token: string) => {
 };
 
 export default {
-  addUserEvent,
-  deleteUserEvent,
+  addUserWeight,
+  deleteUserWeight,
   getUserByToken,
-  getUserEvents,
+  getUserWeights,
   login,
   register,
 };

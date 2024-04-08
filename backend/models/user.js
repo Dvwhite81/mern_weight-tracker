@@ -16,8 +16,7 @@ const userSchema = new mongoose_1.default.Schema({
         required: true,
         minLength: 4,
     },
-    events: [],
-    toDos: [],
+    weights: [],
 });
 userSchema.set('toJSON', {
     transform: (document, returnedUser) => {
