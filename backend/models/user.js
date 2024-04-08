@@ -7,21 +7,17 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const userSchema = new mongoose_1.default.Schema({
     username: {
         type: String,
-        required: false,
+        required: true,
         unique: true,
         minLength: 3,
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
     passwordHash: {
         type: String,
-        required: false,
+        required: true,
         minLength: 4,
     },
-    weights: [],
+    events: [],
+    toDos: [],
 });
 userSchema.set('toJSON', {
     transform: (document, returnedUser) => {

@@ -32,10 +32,10 @@ usersRouter.get('/:token', async (req, res) => {
   });
 });
 
-// Get User Weights by email
-usersRouter.get('/:email/weights', async (req, res) => {
-  const { email } = req.params;
-  const user = await User.findOne({ email: email });
+// Get User Weights by Username
+usersRouter.get('/:username/weights', async (req, res) => {
+  const { username } = req.params;
+  const user = await User.findOne({ username: username });
   console.log('backend get user weights user:', user);
   if (user) {
     res.json({
@@ -47,24 +47,24 @@ usersRouter.get('/:email/weights', async (req, res) => {
   }
 });
 
-// Delete weight
-usersRouter.put('/:email/weights/:weightId', async (req, res) => {
-  const { email, weightId } = req.params;
+// Delete Weight
+usersRouter.put('/:username/weights/:weightId', async (req, res) => {
+  const { username, weightId } = req.params;
   console.log('usersRouter put weightId:', weightId);
-  const user = await User.findOne({ email: email });
+  const user = await User.findOne({ username: username });
 
   if (user) {
     const { weights } = user;
-    const newweights = weights.filter(
+    const newWeights = weights.filter(
       (weight) => weight._id.toString() !== weightId
     );
 
-    user.weights = newweights;
+    user.weights = newWeights;
     await user.save();
 
     res.json({
       success: true,
-      weights: newweights,
+      weights: newWeights,
     });
   } else {
     res.status(404).end();

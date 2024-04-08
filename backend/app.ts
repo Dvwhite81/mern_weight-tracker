@@ -7,8 +7,6 @@ import middleware from './utils/middleware';
 import usersRouter from './controllers/users';
 import registerRouter from './controllers/register';
 import loginRouter from './controllers/login';
-import eventsRouter from './controllers/events';
-import toDosRouter from './controllers/toDos';
 
 const app = express();
 
@@ -32,8 +30,6 @@ app.use(middleware.requestLogger);
 app.use('/api/register', registerRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/events', middleware.userExtractor, eventsRouter);
-app.use('/api/toDos', middleware.userExtractor, toDosRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
