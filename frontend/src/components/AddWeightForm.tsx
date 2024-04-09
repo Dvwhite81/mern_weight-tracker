@@ -1,20 +1,25 @@
 import { SyntheticEvent, useState } from 'react';
 import FormInput from './FormInput';
+import { WeightFormData, WeightType } from '../utils/types';
+import { getFirstUserWeight } from '../utils/helpers';
 
 interface AddWeightFormProps {
-  addWeight: (weight: number, date: string) => void;
+  addWeight: (newWeight: WeightFormData) => void;
+  userWeights: WeightType[];
 }
 
-const AddWeightForm = ({ addWeight }: AddWeightFormProps) => {
-  const [weight, setWeight] = useState(0);
+const AddWeightForm = ({ addWeight, userWeights }: AddWeightFormProps) => {
+  const [weight, setWeight] = useState<number>(getFirstUserWeight(userWeights));
 
   const handleAddWeight = (e: SyntheticEvent) => {
     e.preventDefault();
 
     if (weight !== 0) {
-      const date = new Date().toISOString();
+      const date = new Date();
+      const label = date.toLocaleDateString('en-US');
       console.log('form weight, date:', weight, date);
-      addWeight(weight, date);
+      const newWeight = { weight, label, date };
+      addWeight(newWeight);
     }
   };
   return (

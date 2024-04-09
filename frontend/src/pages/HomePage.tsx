@@ -1,13 +1,14 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 
-import { WeightType, UserType } from '../utils/types';
+import { WeightType, UserType, WeightFormData } from '../utils/types';
 import AddWeightForm from '../components/AddWeightForm';
 import { useNavigate } from 'react-router-dom';
+import WeightChart from '../components/WeightChart';
 
 interface HomePageProps {
   loggedInUser: UserType | null;
   userWeights: WeightType[];
-  addWeight: (weight: number, date: string) => void;
+  addWeight: (newWeight: WeightFormData) => void;
   handleDeleteWeight: (weightId: string) => void;
   handleLogOut: (e: SyntheticEvent) => void;
 }
@@ -19,7 +20,7 @@ const HomePage = ({
   handleDeleteWeight,
   handleLogOut,
 }: HomePageProps) => {
-  const [showWeights, setShowWeights] = useState(false);
+  const [showWeights, setShowWeights] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,23 +49,14 @@ const HomePage = ({
           <button type="button" onClick={() => setShowWeights(false)}>
             Hide Weights
           </button>
-          <ul>
-            {userWeights.map((weight) => (
-              <li key={weight._id}>
-                <p>{weight.weight}</p>
-                <button
-                  type="button"
-                  onClick={() => handleDeleteWeight(weight._id)}
-                >
-                  x
-                </button>
-              </li>
-            ))}
-          </ul>
+          <WeightChart
+            userWeights={userWeights}
+            handleDeleteWeight={handleDeleteWeight}
+          />
         </div>
       )}
 
-      <AddWeightForm addWeight={addWeight} />
+      <AddWeightForm userWeights={userWeights} addWeight={addWeight} />
     </div>
   );
 };

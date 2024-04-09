@@ -2,7 +2,12 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { AuthResult, WeightType, UserType } from './utils/types';
+import {
+  AuthResult,
+  WeightType,
+  UserType,
+  WeightFormData,
+} from './utils/types';
 import userService from './services/userService';
 
 import LoginPage from './pages/LoginPage';
@@ -106,15 +111,10 @@ function App() {
     }
   };
 
-  const addWeight = async (weight: number, date: string) => {
+  const addWeight = async (newWeight: WeightFormData) => {
     const token = localStorage.getItem('token');
 
     if (!loggedInUser || !token) return;
-
-    const newWeight = {
-      weight,
-      date,
-    };
 
     console.log('app newWeight:', newWeight);
 

@@ -34,27 +34,25 @@ export interface UserResult {
 
 export interface WeightFormData {
   weight: number;
-  date: string;
+  label: string;
+  date: Date;
 }
 
 export interface WeightType {
   _id: string;
   weight: number;
-  date: string;
-}
-
-export interface EventStyleType {
-  style: {
-    backgroundColor: string | undefined;
-    borderColor: string | undefined;
-  };
-}
-
-export interface CurrentDayType {
-  currentMonth: boolean;
+  label: string;
   date: Date;
-  month: number;
-  number: number;
-  selected: boolean;
-  year: number;
+}
+
+export interface DatasetType {
+  label: string;
+  data: WeightType[];
+  borderColor: string;
+  backgroundColor: string;
+}
+
+export interface TimeFrameType {
+  labels: string[];
+  weights: WeightType[];
 }
