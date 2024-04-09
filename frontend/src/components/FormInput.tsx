@@ -14,7 +14,7 @@ const FormInput = ({ field }: FormInputProps) => {
         <input
           id={name}
           type={inputType}
-          value={value}
+          value={value.toString()}
           onChange={({ target }) => setValue(target.value)}
         />
       </label>

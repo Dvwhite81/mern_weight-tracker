@@ -1,17 +1,66 @@
-@import url('/src/styles/pages.css');
-@import url('/src/styles/forms.css');
+@import url('/src/styles');
 
-#root,
-#main-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
+:root {
+  --dark-bg: #464f51;
+  --darker-secondary: #0ff4c6;
+  --lighter-secondary: #defff2;
+  --primary-color: #d68fd6;
+  --navbar-height: 10vh;
+  --main-height: 90%;
+  --min-main-height: 90vh;
 }
 
 #main-container {
-  align-items: center;
+  background-color: var(--dark-bg);
+  display: grid;
+  grid-template-rows: var(--navbar-height) var(--min-main-height);
+  height: 100%;
+  padding: 0;
+}
+
+.text-center {
   text-align: center;
+}
+
+a {
+  color: var(--off-white);
+  height: fit-content;
+  text-decoration: none;
+}
+
+a:hover {
+  transform: scale(1.2);
+}
+
+.form-link {
+  color: var(--darker-green);
+}
+
+ul,
+li {
+  list-style-type: none;
+}
+
+input {
+  padding: 5px 10px !important;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 5px 10px !important;
+  width: fit-content;
+}
+
+.btn {
+  background-color: var(--lighter-secondary);
+  border: none;
+  color: var(--dark-bg);
+}
+
+.btn:hover {
+  background-color: var(--darker-secondary);
 }
 
 ul {

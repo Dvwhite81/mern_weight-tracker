@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,7 +11,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { WeightType } from '../utils/types';
-import { getChartData, getUserTimeFrame, options } from '../utils/helpers';
+import { getChartData, getUserTimeFrame } from '../utils/helpers';
 
 ChartJS.register(
   CategoryScale,
@@ -34,9 +34,18 @@ const WeightChart = ({ userWeights }: WeightChartProps) => {
   const [timeFrame, setTimeFrame] = useState(userTimeFrame.all);
   const [data, setData] = useState(getChartData(timeFrame));
 
+  useEffect(() => {
+    const updateData = () => {
+      setTimeFrame(timeFrame);
+      setData(getChartData(timeFrame));
+    };
+
+    updateData();
+  }, [timeFrame, userWeights]);
+
   return (
     <div className="weight-chart-container">
-      <Line options={options} data={data} />
+      <Line data={data} />
     </div>
   );
 };

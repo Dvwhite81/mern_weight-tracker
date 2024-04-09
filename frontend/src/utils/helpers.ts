@@ -5,7 +5,8 @@ export const getFirstUserWeight = (userWeights: WeightType[]) => {
   if (userWeights.length === 0) {
     return 170;
   } else {
-    return userWeights[0].weight;
+    const last = userWeights[userWeights.length - 1];
+    return last.weight;
   }
 };
 
@@ -72,15 +73,7 @@ const getLastOneMonth = (now: Date, dates: Date[]) => {
 
 export const options = {
   responsive: true,
-  plugins: {
-    legend: {
-      position: 'top' as const,
-    },
-    title: {
-      display: true,
-      text: 'Chart.js Line Chart',
-    },
-  },
+  plugins: {},
 };
 
 export const monthLabels = [
@@ -192,8 +185,8 @@ export const getChartData = (timeFrameObj: TimeFrameType) => {
       {
         label: `Your weights for this time frame`,
         data: weights.map((weight) => weight.weight),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgb(214, 143, 214)',
+        backgroundColor: 'rgba(214, 143, 214, 0.5)',
       },
     ],
   };

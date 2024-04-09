@@ -1,16 +1,15 @@
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { WeightType, UserType, WeightFormData } from '../utils/types';
-import AddWeightForm from '../components/AddWeightForm';
-import { useNavigate } from 'react-router-dom';
 import WeightChart from '../components/WeightChart';
+import AddModal from '../components/AddModal';
 
 interface HomePageProps {
   loggedInUser: UserType | null;
   userWeights: WeightType[];
   addWeight: (newWeight: WeightFormData) => void;
   handleDeleteWeight: (weightId: string) => void;
-  handleLogOut: (e: SyntheticEvent) => void;
 }
 
 const HomePage = ({
@@ -18,14 +17,15 @@ const HomePage = ({
   userWeights,
   addWeight,
   handleDeleteWeight,
-  handleLogOut,
 }: HomePageProps) => {
-  const [showWeights, setShowWeights] = useState(true);
+  const [modalClass, setModalClass] = useState('modal hide');
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log('useEffect loggedInUser:', loggedInUser);
+  const closeModal = () => setModalClass('modal hide');
+  const openModal = () => setModalClass('modal');
 
+  useEffect(() => {
     if (!loggedInUser) {
       navigate('/login');
     }
@@ -33,30 +33,33 @@ const HomePage = ({
 
   return (
     <div className="page home-page">
-      <h2>Logged In User: {loggedInUser?.username}</h2>
-      <button type="button" onClick={handleLogOut}>
-        Log Out
-      </button>
-
-      {!showWeights && (
-        <button type="button" onClick={() => setShowWeights(true)}>
-          Show Weights
+      <div className="timeframe-btns">
+        <button type="button" className="btn timeframe-btn">
+          All
         </button>
-      )}
-
-      {showWeights && (
-        <div>
-          <button type="button" onClick={() => setShowWeights(false)}>
-            Hide Weights
-          </button>
-          <WeightChart
-            userWeights={userWeights}
-            handleDeleteWeight={handleDeleteWeight}
-          />
-        </div>
-      )}
-
-      <AddWeightForm userWeights={userWeights} addWeight={addWeight} />
+        <button type="button" className="btn timeframe-btn">
+          This Year
+        </button>
+        <button type="button" className="btn timeframe-btn">
+          Last Six Months
+        </button>
+        <button type="button" className="btn timeframe-btn">
+          This Month
+        </button>
+      </div>
+      <WeightChart
+        userWeights={userWeights}
+        handleDeleteWeight={handleDeleteWeight}
+      />
+      <button type="button" className="btn" onClick={openModal}>
+        Add Weight
+      </button>
+      <AddModal
+        userWeights={userWeights}
+        addWeight={addWeight}
+        modalClass={modalClass}
+        closeModal={closeModal}
+      />
     </div>
   );
 };

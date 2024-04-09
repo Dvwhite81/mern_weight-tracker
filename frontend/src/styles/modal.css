@@ -1,0 +1,29 @@
+.modal {
+  align-items: center;
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  justify-content: center;
+  left: 50%;
+  padding: 1rem;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vh;
+}
+
+.modal .close-btn {
+  background-color: transparent;
+  font-size: x-large;
+  font-weight: bold;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.modal .close-btn:hover {
+  background-color: transparent;
+  transform: scale(1.2);
+}

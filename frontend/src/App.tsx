@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -14,6 +14,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import './App.css';
+import Navbar from './components/NavBar';
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<UserType | null>(null);
@@ -125,6 +126,7 @@ function App() {
 
       if (success) {
         toast.success(message);
+        console.log('result.weights:', result.weights);
         setUserWeights(result.weights);
       } else {
         toast.error(message);
@@ -153,9 +155,7 @@ function App() {
     }
   };
 
-  const handleLogOut = (e: SyntheticEvent) => {
-    e.preventDefault();
-    console.log('handleLogout e:', e);
+  const handleLogOut = () => {
     localStorage.removeItem('token');
     setLoggedInUser(null);
     navigate('/login');
@@ -164,6 +164,7 @@ function App() {
 
   return (
     <div id="main-container">
+      <Navbar loggedInUser={loggedInUser} handleLogOut={handleLogOut} />
       <Routes>
         <Route
           path="/"
@@ -173,7 +174,6 @@ function App() {
               userWeights={userWeights}
               addWeight={addWeight}
               handleDeleteWeight={handleDeleteWeight}
-              handleLogOut={handleLogOut}
             />
           }
         />

@@ -9,7 +9,7 @@ export interface InputField {
   name: string;
   label: string;
   inputType: string;
-  value: string;
+  value: string | Date;
   setValue: (value: string) => void;
 }
 
