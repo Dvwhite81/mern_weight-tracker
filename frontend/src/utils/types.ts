@@ -47,7 +47,7 @@ export interface WeightType {
 
 export interface DatasetType {
   label: string;
-  data: WeightType[];
+  data: number[];
   borderColor: string;
   backgroundColor: string;
 }
@@ -55,4 +55,9 @@ export interface DatasetType {
 export interface TimeFrameType {
   labels: string[];
   weights: WeightType[];
+}
+
+export interface ChartDataType {
+  labels: string[];
+  datasets: DatasetType[];
 }

@@ -10,12 +10,16 @@ interface AddWeightFormProps {
   addWeight: (newWeight: WeightFormData) => void;
   userWeights: WeightType[];
   closeModal: () => void;
+  updateData: (value: string) => void;
+  currentTimeFrame: string;
 }
 
 const AddWeightForm = ({
   addWeight,
   userWeights,
   closeModal,
+  updateData,
+  currentTimeFrame,
 }: AddWeightFormProps) => {
   const [weight, setWeight] = useState<number>(getFirstUserWeight(userWeights));
   const [date, setDate] = useState<Date>();
@@ -28,6 +32,7 @@ const AddWeightForm = ({
       console.log('form weight, date:', weight, date);
       const newWeight = { weight, label, date };
       addWeight(newWeight);
+      updateData(currentTimeFrame);
       closeModal();
     }
   };

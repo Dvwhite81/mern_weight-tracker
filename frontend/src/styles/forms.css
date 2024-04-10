@@ -7,13 +7,17 @@
 
 .form-label {
   align-items: center;
-  display: flex;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr;
   justify-content: space-between;
   margin: 0 auto;
-  width: 100%;
 }
 
 .btn-submit {
+  margin: 1rem auto;
+}
+
+.form.auth-form .form-label {
   margin: 1rem auto;
 }

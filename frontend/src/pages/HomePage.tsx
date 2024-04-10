@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { WeightType, UserType, WeightFormData } from '../utils/types';
+import {
+  WeightType,
+  UserType,
+  WeightFormData,
+  ChartDataType,
+} from '../utils/types';
 import WeightChart from '../components/WeightChart';
 import AddModal from '../components/AddModal';
+import { getChartData } from '../utils/helpers';
 
 interface HomePageProps {
   loggedInUser: UserType | null;
@@ -12,18 +18,23 @@ interface HomePageProps {
   handleDeleteWeight: (weightId: string) => void;
 }
 
-const HomePage = ({
-  loggedInUser,
-  userWeights,
-  addWeight,
-  handleDeleteWeight,
-}: HomePageProps) => {
+const HomePage = ({ loggedInUser, userWeights, addWeight }: HomePageProps) => {
   const [modalClass, setModalClass] = useState('modal hide');
+  const [currentTimeFrame, setCurrentTimeFrame] = useState('all');
+  const [data, setData] = useState<ChartDataType>(
+    getChartData(userWeights, 'all')
+  );
+
+  console.log('data:', data);
 
   const navigate = useNavigate();
 
-  const closeModal = () => setModalClass('modal hide');
-  const openModal = () => setModalClass('modal');
+  const updateData = (timeFrame: string) => {
+    setCurrentTimeFrame(timeFrame);
+    const chartData = getChartData(userWeights, timeFrame);
+
+    setData(chartData);
+  };
 
   useEffect(() => {
     if (!loggedInUser) {
@@ -34,31 +45,43 @@ const HomePage = ({
   return (
     <div className="page home-page">
       <div className="timeframe-btns">
-        <button type="button" className="btn timeframe-btn">
+        <button
+          type="button"
+          className="btn timeframe-btn"
+          onClick={() => updateData('all')}
+        >
           All
         </button>
-        <button type="button" className="btn timeframe-btn">
+        <button
+          type="button"
+          className="btn timeframe-btn"
+          onClick={() => updateData('year')}
+        >
           This Year
         </button>
-        <button type="button" className="btn timeframe-btn">
-          Last Six Months
-        </button>
-        <button type="button" className="btn timeframe-btn">
+        <button
+          type="button"
+          className="btn timeframe-btn"
+          onClick={() => updateData('month')}
+        >
           This Month
         </button>
       </div>
-      <WeightChart
-        userWeights={userWeights}
-        handleDeleteWeight={handleDeleteWeight}
-      />
-      <button type="button" className="btn" onClick={openModal}>
+      <WeightChart data={data} />
+      <button
+        type="button"
+        className="btn"
+        onClick={() => setModalClass('modal')}
+      >
         Add Weight
       </button>
       <AddModal
         userWeights={userWeights}
         addWeight={addWeight}
         modalClass={modalClass}
-        closeModal={closeModal}
+        setModalClass={setModalClass}
+        updateData={updateData}
+        currentTimeFrame={currentTimeFrame}
       />
     </div>
   );

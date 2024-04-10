@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,8 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { WeightType } from '../utils/types';
-import { getChartData, getUserTimeFrame } from '../utils/helpers';
+import { ChartDataType } from '../utils/types';
 
 ChartJS.register(
   CategoryScale,
@@ -24,25 +22,10 @@ ChartJS.register(
 );
 
 interface WeightChartProps {
-  userWeights: WeightType[];
-  handleDeleteWeight: (weightId: string) => void;
+  data: ChartDataType;
 }
 
-const WeightChart = ({ userWeights }: WeightChartProps) => {
-  const userTimeFrame = getUserTimeFrame(userWeights);
-
-  const [timeFrame, setTimeFrame] = useState(userTimeFrame.all);
-  const [data, setData] = useState(getChartData(timeFrame));
-
-  useEffect(() => {
-    const updateData = () => {
-      setTimeFrame(timeFrame);
-      setData(getChartData(timeFrame));
-    };
-
-    updateData();
-  }, [timeFrame, userWeights]);
-
+const WeightChart = ({ data }: WeightChartProps) => {
   return (
     <div className="weight-chart-container">
       <Line data={data} />
