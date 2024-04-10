@@ -46,9 +46,10 @@ const AddWeightForm = ({
         field={{
           name: 'new-weight-input',
           label: 'Weight',
-          inputType: 'text',
-          value: weight.toString(),
-          setValue: (value: string) => setWeight(parseFloat(value)),
+          inputType: 'number',
+          value: weight,
+          setValue: (value: number | string) =>
+            setWeight(parseInt(value.toString())),
         }}
       />
       <button type="submit" className="btn btn-submit">

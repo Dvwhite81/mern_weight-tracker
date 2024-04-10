@@ -15,6 +15,7 @@ import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import './App.css';
 import Navbar from './components/NavBar';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<UserType | null>(null);
@@ -39,7 +40,6 @@ function App() {
 
             setLoggedInUser(user);
             setUserWeights(user.weights);
-            navigate('/');
           } else {
             localStorage.removeItem('token');
           }
@@ -174,6 +174,15 @@ function App() {
               userWeights={userWeights}
               addWeight={addWeight}
               handleDeleteWeight={handleDeleteWeight}
+            />
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProfilePage
+              loggedInUser={loggedInUser}
+              userWeights={userWeights}
             />
           }
         />

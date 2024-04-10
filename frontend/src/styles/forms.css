@@ -21,3 +21,25 @@
 .form.auth-form .form-label {
   margin: 1rem auto;
 }
+
+.rdp * {
+  border: none;
+}
+
+.rdp-day:hover {
+  color: black;
+}
+
+.rdp-day_selected {
+  background-color: black;
+  color: whitesmoke;
+}
+
+.rdp-day_selected:hover {
+  background-color: var(--rdp-background-color);
+}
+
+.rdp-day_today:not(.rdp-day_outside) {
+  background-color: whitesmoke;
+  color: black;
+}

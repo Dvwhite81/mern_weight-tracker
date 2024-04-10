@@ -76,11 +76,16 @@ export const getChartData = (
     new Date(weight.date).toDateString()
   );
   console.log('weightsForChart:', weightsForChart);
+
+  const chartLabel =
+    timeFrame === 'all'
+      ? 'Your weights - All'
+      : `Your weights for this ${timeFrame}`;
   return {
     labels,
     datasets: [
       {
-        label: `Your weights for this time frame`,
+        label: chartLabel,
         data: weightsForChart.map((weight) => weight.weight),
         borderColor: 'rgb(214, 143, 214)',
         backgroundColor: 'rgba(214, 143, 214, 0.5)',

@@ -4,13 +4,13 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  height: 70vh;
+  height: var(--min-main-height);
   justify-content: center;
   left: 50%;
-  padding: 1rem;
+  padding: 0 1rem;
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: var(--navbar-height);
+  transform: translate(-50%);
   width: 80vh;
 }
 

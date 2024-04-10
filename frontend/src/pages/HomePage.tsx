@@ -67,10 +67,15 @@ const HomePage = ({ loggedInUser, userWeights, addWeight }: HomePageProps) => {
           This Month
         </button>
       </div>
-      <WeightChart data={data} />
+      <WeightChart
+        data={data}
+        userWeights={userWeights}
+        updateData={updateData}
+        currentTimeFrame={currentTimeFrame}
+      />
       <button
         type="button"
-        className="btn"
+        className="btn btn-submit"
         onClick={() => setModalClass('modal')}
       >
         Add Weight

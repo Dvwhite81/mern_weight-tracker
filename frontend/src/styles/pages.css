@@ -1,5 +1,46 @@
 .page {
   color: whitesmoke;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   width: 100%;
+}
+
+.timeframe-btns {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.profile-page {
+  text-align: center;
+}
+
+.weight-table-container {
+  max-height: 400px;
+  overflow: auto;
+}
+
+#weight-table {
+  height: 90%;
+  margin: 1rem auto;
+  max-width: 100vh;
+  overflow-x: scroll;
+  padding: 2rem;
+  width: 60vw;
+}
+
+#weight-table tr {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+#weight-table thead tr {
+  background-color: black;
+  color: whitesmoke;
 }

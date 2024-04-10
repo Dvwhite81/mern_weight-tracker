@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { UserType } from '../utils/types';
 
 import LogOutBtn from './LogOutBtn';
@@ -9,13 +9,21 @@ interface NavbarProps {
 }
 
 const Navbar = ({ loggedInUser, handleLogOut }: NavbarProps) => {
+  const { pathname } = useLocation();
+  console.log('pathname:', pathname);
   return (
     <nav id="navbar">
       {loggedInUser ? (
         <>
-          <Link className="link nav-link" to="/">
-            Home
-          </Link>
+          {pathname === '/' ? (
+            <Link className="link nav-link" to="/profile">
+              Profile
+            </Link>
+          ) : (
+            <Link className="link nav-link" to="/">
+              Home
+            </Link>
+          )}
           <LogOutBtn handleLogOut={handleLogOut} />
         </>
       ) : (

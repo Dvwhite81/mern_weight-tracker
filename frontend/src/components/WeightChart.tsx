@@ -9,7 +9,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { ChartDataType } from '../utils/types';
+import { ChartDataType, WeightType } from '../utils/types';
+import { useEffect } from 'react';
 
 ChartJS.register(
   CategoryScale,
@@ -23,9 +24,22 @@ ChartJS.register(
 
 interface WeightChartProps {
   data: ChartDataType;
+  userWeights: WeightType[];
+  updateData: (value: string) => void;
+  currentTimeFrame: string;
 }
 
-const WeightChart = ({ data }: WeightChartProps) => {
+const WeightChart = ({
+  data,
+  userWeights,
+  updateData,
+  currentTimeFrame,
+}: WeightChartProps) => {
+  useEffect(() => {
+    updateData(currentTimeFrame);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userWeights]);
+
   return (
     <div className="weight-chart-container">
       <Line data={data} />

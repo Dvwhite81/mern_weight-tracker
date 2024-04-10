@@ -16,6 +16,7 @@ const FormInput = ({ field }: FormInputProps) => {
           type={inputType}
           value={value.toString()}
           onChange={({ target }) => setValue(target.value)}
+          min={typeof value === 'number' ? 0 : value}
         />
       </label>
     </div>

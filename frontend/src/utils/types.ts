@@ -9,8 +9,8 @@ export interface InputField {
   name: string;
   label: string;
   inputType: string;
-  value: string | Date;
-  setValue: (value: string) => void;
+  value: string | number;
+  setValue: (value: string | number) => void;
 }
 
 export interface CheckboxField {
